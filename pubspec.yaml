@@ -40,7 +40,7 @@ dependencies:
   intl: ^0.18.1
   shared_preferences: ^2.0.15
   get: ^4.6.6
-
+  flutter_qr_bar_scanner: ^3.0.2
 
 
 dev_dependencies:
