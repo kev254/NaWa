@@ -1,32 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'QR Code Scanner',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: QRScanPage(),
-    );
-  }
-}
-
 class QRScanPage extends StatefulWidget {
   @override
   _QRScanPageState createState() => _QRScanPageState();
 }
 
 class _QRScanPageState extends State<QRScanPage> {
-  String qrInfo = 'Scan a QR code';
+  var qrInfo = null;
   bool camState = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    camState = true;
+
+  }
 
   void onQRCodeScanned(String code) {
     setState(() {
@@ -55,7 +44,7 @@ class _QRScanPageState extends State<QRScanPage> {
                 onChanged: (value) {
                   // Handle transaction type change
                 },
-                items: ['Type 1', 'Type 2', 'Type 3']
+                items: ["Peer to peer", 'Peer to Business', 'Business to peer', 'Business to business']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -76,6 +65,11 @@ class _QRScanPageState extends State<QRScanPage> {
                     ),
                     qrCodeCallback: (code) {
                      // onQRCodeScanned(code);
+                      setState(() {
+                        qrInfo=code;
+
+                      });
+                      print(qrInfo);
                     },
                   )
                 : Center(
@@ -97,7 +91,7 @@ class _QRScanPageState extends State<QRScanPage> {
                   camState = true;
                 });
               },
-              child: Text('Scan QR Code'),
+              child: Text('Authorize transaction'),
             ),
           ),
         ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../Pages/profilePage.dart';
 import '../themes/colors.dart';
 
 Widget imageButton({
@@ -82,14 +83,21 @@ Widget customAppBar({
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        smallCardwithImage(
-            bgColour: Colors.transparent,
-            isLoading: false,
-            imageUrl: "assets/user_icon.png",
-            context: context,
-            function: () {}),
+        GestureDetector(
+          onTap: (){
+            Get.to(ProfilePage());
+          },
+          child: smallCardwithImage(
+              bgColour: Colors.transparent,
+              isLoading: false,
+              imageUrl: "assets/user_icon.png",
+              context: context,
+              function: () {
+
+              }),
+        ),
         Text(
-          'Kevin. O',
+          '{user_name}',
           style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -456,6 +464,65 @@ required TextEditingController controller,
       ),
     );
   }
+
+Widget navItem({required iconPath, required label, required dynamic goTo}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 5),
+    child: Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0), // Adjust the radius as needed
+      ),
+      elevation: 3, // Adjust the elevation as needed
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12.0), // Same radius as the Card
+        onTap: () {
+          Get.to(goTo);
+        },
+        child: ListTile(
+          leading: Icon(iconPath, color: Colors.white, size: 22),
+          trailing: const Icon(
+            Icons.keyboard_arrow_right,
+            color: Colors.white,
+            size: 22,
+          ),
+          title: Text(
+            label,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Nunito',
+            ),
+          ),
+          tileColor: AppColors.greyTextColor,
+          textColor: Colors.white,
+          selectedTileColor: AppColors.primaryColor,
+        ),
+      ),
+    ),
+  );
+}
+
+Widget navMenu({required navItems}) {
+  return ListView(
+    children: <Widget>[
+      const Padding(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Text('',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500))),
+      SizedBox(
+        child: Column(children: navItems),
+      ),
+    ],
+  );
+}
+
+
+
+
+
 
 
 
