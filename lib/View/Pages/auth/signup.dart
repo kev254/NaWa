@@ -114,30 +114,30 @@ class _SignUpState extends State<SignUp> {
                               type: TextInputType.name,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Please enter your  name';
+                                  return 'Please enter your name';
                                 }
                                 return null;
                               }),
                           customFormField(
                             height: myWidth,
                               width: myWidth,
-                              label: 'Email',
+                              label: 'LastName',
                               require: true,
                               controller: lastNameCtrl,
-                              type: TextInputType.emailAddress,
+                              type: TextInputType.name,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Please enter your  last name';
+                                  return 'Please enter your last name';
                                 }
                                 return null;
                               }),
                           customFormField(
                             height: myHeight,
                               width: myWidth,
-                              label: 'Phone',
+                              label: 'Email',
                               require: true,
                               controller: emailCtrl,
-                              type: TextInputType.text,
+                              type: TextInputType.emailAddress,
                               validator: (value) {
                                 if (!GetUtils.isEmail(value!)) {
                                   return 'Please enter a Valid email';
@@ -147,7 +147,7 @@ class _SignUpState extends State<SignUp> {
                           customFormField(
                             height: myHeight,
                               width: myWidth,
-                              label: 'ID Number',
+                              label: 'Phone Number',
                               require: true,
                               controller: phoneCtrl,
                               type: TextInputType.phone,

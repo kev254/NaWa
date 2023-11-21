@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nawa/View/themes/colors.dart';
+import 'package:get/get.dart';
 
 import '../widgets/globalwidgets.dart';
+import 'qrScan.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -224,8 +226,7 @@ class _HomePageState extends State<HomePage> {
             )),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-
-            // Get.to(PoyamentPage());
+            Get.to(QRScanPage());
           },
           backgroundColor: AppColors.primaryColor,
           shape: RoundedRectangleBorder(
@@ -236,7 +237,6 @@ class _HomePageState extends State<HomePage> {
             color: Colors.white,
           ),
         ),
-
       ),
     );
   }

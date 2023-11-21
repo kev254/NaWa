@@ -38,7 +38,7 @@ class Auth with ChangeNotifier {
     showSnackbar(
         path: Icons.check_rounded,
         title: "Successful Sign Up!",
-        subtitle: "Welcome to World Vain");
+        subtitle: "Welcome to NaWa");
     await Future.delayed(const Duration(seconds: 2));
     Get.off(() => Login());
     notifyListeners();

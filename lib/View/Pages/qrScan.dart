@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,16 +26,10 @@ class QRScanPage extends StatefulWidget {
 }
 
 class _QRScanPageState extends State<QRScanPage> {
+  final ImagePicker _picker = ImagePicker();
   String qrInfo = 'Scan a QR code';
   bool camState = false;
-
-  void onQRCodeScanned(String code) {
-    setState(() {
-      camState = false;
-      qrInfo = code;
-      // You can also navigate to another page or perform any actions with the scanned code here
-    });
-  }
+  String? _selectedTransactionType;
 
   @override
   Widget build(BuildContext context) {
@@ -45,24 +40,40 @@ class _QRScanPageState extends State<QRScanPage> {
       ),
       body: Column(
         children: [
+          // Transaction Type Dropdown
           Expanded(
             child: Container(
               padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+              color: Colors.black, 
+              borderRadius: BorderRadius.circular(20), 
+              ),
               alignment: Alignment.center,
               child: DropdownButton<String>(
                 isExpanded: true,
-                hint: Text('SELECT TRANSACTION TYPE', style: TextStyle(color: Colors.white)),
-                onChanged: (value) {
-                  // Handle transaction type change
+                value: _selectedTransactionType,
+                hint: Text(
+                  'SELECT TRANSACTION TYPE', 
+                  style: TextStyle(color: Colors.grey),),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedTransactionType = newValue; // Update the selected value
+                  });
                 },
-                items: ['Type 1', 'Type 2', 'Type 3']
+                items: ['Peer to Peer', 'Peer To Business', 'Business To Business', 'Business To Peer']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value, style: TextStyle(color: Colors.black)),
+                    child: Text(
+                      value, 
+                      style: TextStyle(color: Colors.black),),
                   );
                 }).toList(),
                 dropdownColor: Colors.white,
+                iconEnabledColor: Colors.white, // Adjust the icon color to match the design
+                iconSize: 24, // Adjust the icon size to match the design
+                underline: Container(), // Remove the underline
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ),
@@ -75,34 +86,80 @@ class _QRScanPageState extends State<QRScanPage> {
                       style: TextStyle(color: Colors.red),
                     ),
                     qrCodeCallback: (code) {
-                     // onQRCodeScanned(code);
+                      // Handle QR code scanned
                     },
                   )
-                : Center(
-                    child: Text(
-                      qrInfo,
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+                : GestureDetector(
+                    onTap: () {
+                      // Open the camera
+                      captureImageWithCamera();
+                    },
+                    child: Center(
+                      child: Text(
+                        qrInfo,
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
                     ),
                   ),
           ),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue,
-                onPrimary: Colors.white,
-              ),
-              onPressed: () {
-                setState(() {
-                  camState = true;
-                });
-              },
-              child: Text('Scan QR Code'),
-            ),
+
+          // Button to pick an image from gallery
+          ElevatedButton(
+            onPressed: () {
+              pickImageFromGallery();
+            },
+            child: Text('Pick QR Code from Gallery'),
+          ),
+
+          // Button to handle 'Can't scan the QR code'
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TransactionDetails()),
+              );
+            },
+            child: Text("Can't scan the QR code"),
           ),
         ],
       ),
       backgroundColor: Colors.black,
+    );
+  }
+
+  Future<void> captureImageWithCamera() async {
+    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+    if (photo != null) {
+      setState(() {
+        qrInfo = 'QR code captured';
+        camState = false;
+        // You can also handle the captured photo here
+      });
+    }
+  }
+
+  Future<void> pickImageFromGallery() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        qrInfo = 'QR code selected from gallery';
+        camState = false;
+        // You can also handle the selected image here
+      });
+    }
+  }
+}
+
+class TransactionDetails extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Transaction Details'),
+      ),
+      body: Center(
+        child: Text('Transaction Details Page'),
+      ),
     );
   }
 }
