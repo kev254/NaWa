@@ -5,6 +5,9 @@ import 'package:nawa/View/Pages/historyPage.dart';
 import 'package:nawa/View/Pages/homePage.dart';
 import 'package:nawa/View/Pages/profilePage.dart';
 
+import '../Pages/setup.dart';
+import '../Pages/wallet_oeperation.dart';
+
 class NavBar extends StatefulWidget {
   const NavBar({Key? key}) : super(key: key);
 
@@ -17,8 +20,8 @@ class _NavBarState extends State<NavBar> {
   static List<Widget> pages = [
     HomePage(),
     CartPage(),
-    HistoryPage(),
-    ProfilePage()
+    WalleOperaionsPAge(),
+    SetupPage()
   ];
 
   @override
@@ -56,26 +59,26 @@ class _NavBarState extends State<NavBar> {
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
-                    'assets/4.png',
+                    'assets/5.png',
                     height: myHeight * 0.03,
                     color: Colors.grey.shade300,
                   ),
                   label: '',
                   activeIcon: Image.asset(
-                    'assets/4.png',
+                    'assets/5.png',
                     height: myHeight * 0.03,
                     color: Color(0xff7847FC),
                   ),
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset(
-                    'assets/5.png',
+                    'assets/4.png',
                     height: myHeight * 0.03,
                     color: Colors.grey.shade300,
                   ),
                   label: '',
                   activeIcon: Image.asset(
-                    'assets/5.png',
+                    'assets/4.png',
                     height: myHeight * 0.03,
                     color: Color(0xff7847FC),
                   ),

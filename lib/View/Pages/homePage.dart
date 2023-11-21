@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:nawa/View/Pages/qrScan.dart';
 import 'package:nawa/View/themes/colors.dart';
 import 'package:get/get.dart';
 
@@ -63,20 +66,28 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       // myItemContiner('Card balance', '100.000'),
                       // myItemContiner('Removable', '90.000'),
-                      Column(
-                        children: [
-                          smallCardwithImage(
-                              bgColour: AppColors.primaryColor,
-                              isLoading: false,
-                              imageUrl: "assets/pay_icon.png",
-                              context: context,
-                              function: () {}),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          labelWidget(
-                              text: "Pay", myHeight: myHeight, myWidth: myWidth)
-                        ],
+                      GestureDetector(
+                        onTap: (){
+                          Get.to(QRScanPage());
+                        },
+                        child: Column(
+                          children: [
+                            smallCardwithImage(
+                                bgColour: AppColors.primaryColor,
+                                isLoading: false,
+                                imageUrl: "assets/pay_icon.png",
+                                context: context,
+                                function: () {
+                                  print("paid tapped");
+
+                                }),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            labelWidget(
+                                text: "Pay", myHeight: myHeight, myWidth: myWidth)
+                          ],
+                        ),
                       ),
                       Column(
                         children: [

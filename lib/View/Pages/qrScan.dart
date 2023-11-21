@@ -2,24 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 import 'package:image_picker/image_picker.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'QR Code Scanner',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: QRScanPage(),
-    );
-  }
-}
-
 class QRScanPage extends StatefulWidget {
   @override
   _QRScanPageState createState() => _QRScanPageState();
@@ -29,6 +11,13 @@ class _QRScanPageState extends State<QRScanPage> {
   final ImagePicker _picker = ImagePicker();
   String qrInfo = 'Scan a QR code';
   bool camState = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    camState = true;
+
+  }
   String? _selectedTransactionType;
 
   @override
