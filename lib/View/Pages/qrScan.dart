@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:get/get.dart';
+import 'transactionDetails.dart';
 
 class QRScanPage extends StatefulWidget {
   @override
@@ -75,7 +77,12 @@ class _QRScanPageState extends State<QRScanPage> {
                       style: TextStyle(color: Colors.red),
                     ),
                     qrCodeCallback: (code) {
-                      // Handle QR code scanned
+                      if (code != null) {
+                        setState(() {
+                          qrInfo = 'QR Code Detected: $code';
+                          camState = false;
+                        });
+                      }
                     },
                   )
                 : GestureDetector(
@@ -102,11 +109,8 @@ class _QRScanPageState extends State<QRScanPage> {
 
           // Button to handle 'Can't scan the QR code'
           ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => TransactionDetails()),
-              );
+            onPressed: () => {
+              Get.to(TransactionPage())
             },
             child: Text("Can't scan the QR code"),
           ),
@@ -139,16 +143,3 @@ class _QRScanPageState extends State<QRScanPage> {
   }
 }
 
-class TransactionDetails extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Transaction Details'),
-      ),
-      body: Center(
-        child: Text('Transaction Details Page'),
-      ),
-    );
-  }
-}
