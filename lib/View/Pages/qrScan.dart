@@ -1,8 +1,14 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:nawa/View/Pages/functions/walalet_operations.dart';
+import 'package:nawa/View/themes/colors.dart';
+import '../widgets/globalwidgets.dart';
 import 'transactionDetails.dart';
+
+final walletCtrl = Get.put(WalletCtrl());
 
 class QRScanPage extends StatefulWidget {
   @override
@@ -15,75 +21,83 @@ class _QRScanPageState extends State<QRScanPage> {
   bool camState = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     camState = true;
-
   }
-  String? _selectedTransactionType;
+
+  String? _selectedTransactionType = "Select transaction type";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Transact'),
+        title: Text('Make payment'),
         backgroundColor: Colors.black87,
       ),
       body: Column(
         children: [
           // Transaction Type Dropdown
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-              color: Colors.black, 
-              borderRadius: BorderRadius.circular(20), 
-              ),
-              alignment: Alignment.center,
-              child: DropdownButton<String>(
-                isExpanded: true,
-                value: _selectedTransactionType,
-                hint: Text(
-                  'SELECT TRANSACTION TYPE', 
-                  style: TextStyle(color: Colors.grey),),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedTransactionType = newValue; // Update the selected value
-                  });
-                },
-                items: ['Peer to Peer', 'Peer To Business', 'Business To Business', 'Business To Peer']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(
-                      value, 
-                      style: TextStyle(color: Colors.black),),
-                  );
-                }).toList(),
-                dropdownColor: Colors.white,
-                iconEnabledColor: Colors.white, // Adjust the icon color to match the design
-                iconSize: 24, // Adjust the icon size to match the design
-                underline: Container(), // Remove the underline
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
+          // Expanded(
+          //   child: Container(
+          //     padding: EdgeInsets.all(20),
+          //     decoration: BoxDecoration(
+          //     color: Colors.black,
+          //     borderRadius: BorderRadius.circular(20),
+          //     ),
+          //     alignment: Alignment.center,
+          //     child: DropdownButton<String>(
+          //       isExpanded: true,
+          //       value: _selectedTransactionType,
+          //       hint: Text(
+          //         _selectedTransactionType!,
+          //         style: TextStyle(color: Colors.white),
+          //       ),
+          //       onChanged: (String? newValue) {
+          //         setState(() {
+          //           _selectedTransactionType = newValue ?? 'Peer to Peer'; // Update the selected value, provide a default value if newValue is null
+          //         });
+          //       },
+          //       items: ['Peer to Peer', 'Peer To Business', 'Business To Business', 'Business To Peer']
+          //           .map<DropdownMenuItem<String>>((String value) {
+          //         return DropdownMenuItem<String>(
+          //           value: value,
+          //           child: Text(
+          //             value,
+          //             style: TextStyle(color: Colors.black),
+          //           ),
+          //         );
+          //       }).toList(),
+          //       dropdownColor: Colors.white,
+          //       iconEnabledColor: Colors.white, // Adjust the icon color to match the design
+          //       iconSize: 24, // Adjust the icon size to match the design
+          //       underline: Container(), // Remove the underline
+          //       style: TextStyle(color: Colors.white),
+          //     ),
+          //   ),
+          // ),
           Expanded(
             flex: 5,
             child: camState
-                ? QRBarScannerCamera(
-                    onError: (context, error) => Text(
-                      error.toString(),
-                      style: TextStyle(color: Colors.red),
+                ? Padding(
+                    padding: const EdgeInsets.only(
+                        top: 30.0, bottom: 30, left: 10, right: 10),
+                    child: QRBarScannerCamera(
+                      onError: (context, error) => Text(
+                        error.toString(),
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      qrCodeCallback: (code) {
+                        if (code != null) {
+                          setState(() {
+                            print("Got_data: " + code);
+                            qrInfo = '$code';
+                            camState = false;
+                            walletCtrl.showBusinessDetailsDialog(
+                                context, qrInfo);
+                          });
+                        }
+                      },
                     ),
-                    qrCodeCallback: (code) {
-                      if (code != null) {
-                        setState(() {
-                          qrInfo = 'QR Code Detected: $code';
-                          camState = false;
-                        });
-                      }
-                    },
                   )
                 : GestureDetector(
                     onTap: () {
@@ -98,21 +112,34 @@ class _QRScanPageState extends State<QRScanPage> {
                     ),
                   ),
           ),
+          // Text(qrInfo),
 
-          // Button to pick an image from gallery
-          ElevatedButton(
-            onPressed: () {
-              pickImageFromGallery();
-            },
-            child: Text('Pick QR Code from Gallery'),
-          ),
-
-          // Button to handle 'Can't scan the QR code'
-          ElevatedButton(
-            onPressed: () => {
-              Get.to(TransactionPage())
-            },
-            child: Text("Can't scan the QR code"),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Expanded(
+                child:PrimaryButton(
+          label: 'Enter Details',
+              txtColor: AppColors.whiteColor,
+              bgColor: AppColors.primaryColor,
+              isLoading: false,
+              onPressed: () {
+                walletCtrl.inputBusinessDetails(context);
+              }
+          )),
+            SizedBox(
+              width: 8,
+            ),
+            Expanded(
+                child: PrimaryButton(
+                    label: 'Upload QR',
+                    txtColor: AppColors.whiteColor,
+                    bgColor: AppColors.primaryColor,
+                    isLoading: false,
+                    onPressed: () {
+                      pickImageFromGallery();
+                    })),
+          ]),
+          SizedBox(
+            height: 30,
           ),
         ],
       ),
@@ -142,4 +169,3 @@ class _QRScanPageState extends State<QRScanPage> {
     }
   }
 }
-

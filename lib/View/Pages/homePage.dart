@@ -6,8 +6,9 @@ import 'package:nawa/View/themes/colors.dart';
 import 'package:get/get.dart';
 
 import '../widgets/globalwidgets.dart';
+import 'functions/walalet_operations.dart';
 import 'qrScan.dart';
-
+final walletCtrl = Get.put(WalletCtrl());
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -89,39 +90,49 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      Column(
-                        children: [
-                          smallCardwithImage(
-                              bgColour: Colors.red,
-                              isLoading: false,
-                              imageUrl: "assets/withdraw_icon.png",
-                              context: context,
-                              function: () {}),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          labelWidget(
-                              text: "Withdraw",
-                              myHeight: myHeight,
-                              myWidth: myWidth)
-                        ],
+                      GestureDetector(
+                        onTap: (){
+                          walletCtrl.withdrawDialog(context);
+                        },
+                        child: Column(
+                          children: [
+                            smallCardwithImage(
+                                bgColour: Colors.red,
+                                isLoading: false,
+                                imageUrl: "assets/withdraw_icon.png",
+                                context: context,
+                                function: () {}),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            labelWidget(
+                                text: "Withdraw",
+                                myHeight: myHeight,
+                                myWidth: myWidth)
+                          ],
+                        ),
                       ),
-                      Column(
-                        children: [
-                          smallCardwithImage(
-                              bgColour: Colors.green,
-                              isLoading: false,
-                              imageUrl: "assets/4.png",
-                              context: context,
-                              function: () {}),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          labelWidget(
-                              text: "Deposit",
-                              myHeight: myHeight,
-                              myWidth: myWidth)
-                        ],
+                      GestureDetector(
+                        onTap: (){
+                          walletCtrl.depositDialog(context);
+                        },
+                        child: Column(
+                          children: [
+                            smallCardwithImage(
+                                bgColour: Colors.green,
+                                isLoading: false,
+                                imageUrl: "assets/4.png",
+                                context: context,
+                                function: () {}),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            labelWidget(
+                                text: "Deposit",
+                                myHeight: myHeight,
+                                myWidth: myWidth)
+                          ],
+                        ),
                       ),
                       Column(
                         children: [
@@ -235,6 +246,7 @@ class _HomePageState extends State<HomePage> {
                 ))
               ],
             )),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Get.to(QRScanPage());
@@ -246,6 +258,13 @@ class _HomePageState extends State<HomePage> {
           child: const Icon(
             Icons.qr_code_scanner_outlined,
             color: Colors.white,
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          notchMargin: 8.0,
+          child: Container(
+            height: 0,
           ),
         ),
       ),

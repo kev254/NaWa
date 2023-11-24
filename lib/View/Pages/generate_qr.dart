@@ -16,14 +16,20 @@ class QRImage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Container(
-        color: AppColors.whiteColor,
+        color: AppColors.blackColor,
         child: Center(
-          child: QrImageView(
-            data: data,
-            size: 280,
-            embeddedImage: AssetImage('assets/your_image.png'), // Replace with your image asset path
-            embeddedImageStyle: QrEmbeddedImageStyle(
-              size: Size(60, 60), // Adjust the size of the embedded image
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(
+              Colors.white, // Set the color you want for the QR code
+              BlendMode.srcIn,
+            ),
+            child: QrImageView(
+              data: data,
+              size: 280,
+              embeddedImage: AssetImage('assets/logo.png'), // Replace with your image asset path
+              embeddedImageStyle: QrEmbeddedImageStyle(
+                size: Size(60, 60), // Adjust the size of the embedded image
+              ),
             ),
           ),
         ),

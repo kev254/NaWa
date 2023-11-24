@@ -42,8 +42,6 @@ class _SplashState extends State<Splash> {
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: myHeight * 0.01),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -58,10 +56,11 @@ class _SplashState extends State<Splash> {
                         text: "NaWa", myHeight: myHeight, myWidth: myWidth)
                   ],
                 ),
+                SizedBox(height: 30,),
                 Image.asset(
                   'assets/banner.png',
-                  width: 250,
-                  height: 250,
+                  width: 280,
+                  height: 280,
                   fit: BoxFit.fill,
 
                 ),
@@ -83,6 +82,7 @@ class _SplashState extends State<Splash> {
                 //         fontWeight: FontWeight.normal),
                 //   ),
                 // ),
+                SizedBox(height: 80,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

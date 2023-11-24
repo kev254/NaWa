@@ -53,12 +53,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.blackColor,
       appBar: AppBar(
-          bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(1.0),
-              child: Container(
-                color: Colors.white,
-                height: 1.0,
-              )),
+        backgroundColor: AppColors.blackColor,
           elevation: 4,
           toolbarHeight: 80,
           leading: Padding(
@@ -86,7 +81,7 @@ class ForgotPasswordState extends State<ForgotPassword> {
                     padding: EdgeInsets.only(top: 80, bottom: 25),
                     child: Text(
                       "Don't worry, it happens to the best of us",
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.center,style: TextStyle(color: AppColors.whiteColor),
                     )),
                 customFormField(
                   height: myHeight,

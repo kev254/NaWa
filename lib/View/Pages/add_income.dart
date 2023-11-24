@@ -103,7 +103,7 @@ class AddIncomePageState extends State<AddIncomePage> {
                       setState(() {
                         _isLoading = true;
                       });
-                      authSignIn();
+                      // authSignIn();
 
                       await Future.delayed(const Duration(seconds: 2));
                       setState(() {

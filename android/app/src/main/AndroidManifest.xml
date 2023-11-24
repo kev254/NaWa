@@ -6,7 +6,7 @@
 
     
     <application
-        android:label="nawa"
+        android:label="NaWa"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

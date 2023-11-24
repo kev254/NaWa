@@ -5,6 +5,7 @@ import 'package:nawa/View/Pages/historyPage.dart';
 import 'package:nawa/View/Pages/homePage.dart';
 import 'package:nawa/View/Pages/profilePage.dart';
 
+import '../Pages/dashboard.dart';
 import '../Pages/setup.dart';
 import '../Pages/wallet_oeperation.dart';
 
@@ -19,7 +20,7 @@ class _NavBarState extends State<NavBar> {
   int index = 0;
   static List<Widget> pages = [
     HomePage(),
-    CartPage(),
+    DashboardPage(),
     WalleOperaionsPAge(),
     SetupPage()
   ];

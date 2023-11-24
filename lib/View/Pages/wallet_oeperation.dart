@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:nawa/View/Pages/qrScan.dart';
 import 'package:nawa/View/themes/colors.dart';
 
 import '../widgets/globalwidgets.dart';
+import 'functions/walalet_operations.dart';
 import 'generate_qr.dart';
 import 'homePage.dart';
+final walletCtrl = Get.put(WalletCtrl());
 
 class WalleOperaionsPAge extends StatefulWidget {
   static const routeName = "/inventory";
@@ -35,29 +40,40 @@ class _WalleOperaionsPAgeState extends State<WalleOperaionsPAge> {
             child: SizedBox(
                 height: double.maxFinite,
                 child: navMenu(navItems: [
-                  navItem(
+                  WalletnavItem(
                       iconPath: Icons.money,
                       label: 'Deposit',
-                      goTo: ''),
-                  navItem(
+                      function: (){
+                        walletCtrl.depositDialog(context);
+                      }),
+                  WalletnavItem(
                       iconPath: Icons.money_off,
                       label: 'Withdraw',
-                      goTo: ''),
+                      function: (){
+                        walletCtrl.withdrawDialog(context);
+                      }),
 
-                  navItem(
+                  WalletnavItem(
                       iconPath: Icons.send_to_mobile,
                       label: 'Make payment',
-                      goTo: ''),
+                      function: (){
+                        Get.to(QRScanPage());
+                      }),
 
-                  navItem(
+                  WalletnavItem(
                       iconPath: Icons.qr_code_2_sharp,
                       label: 'Generate QR',
-                      goTo: QRImage("test")),
+                      function: (){
+                        Get.to(QRImage("{company_name: Jambo, account_number: 45671gsstswt92929, amount: 600,}"));
+                      }
+                  ),
 
-                  navItem(
+                  WalletnavItem(
                       iconPath: Icons.real_estate_agent_outlined,
                       label: 'Request Loan',
-                      goTo: ''),
+                      function: (){
+                        Navigator.pop(context);
+                      }),
 
 
 

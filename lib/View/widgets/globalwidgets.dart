@@ -275,6 +275,51 @@ Widget customFormField({
     ),
   );
 }
+Widget customWalletField({
+  required String label,
+  required bool require,
+  required TextEditingController controller,
+  TextInputType? type,
+  Color? txtColor,
+  required String? Function(String?) validator,
+  required double height,
+  required double width,
+}) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 8.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: txtColor ?? AppColors.blackTextColor, // Provide a default color
+          ),
+        ),
+        TextFormField(
+          cursorColor: AppColors.blackColor, // Make sure AppColors is defined
+          controller: controller,
+          keyboardType: type,
+          validator: validator,
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            color: AppColors.blackColor, // Customize text color as needed
+          ),
+          decoration: InputDecoration(
+            fillColor: Colors.white,
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(4.0)),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
 Widget PasswordField ( {
    required String label,
    required TextEditingController controller,
@@ -501,6 +546,41 @@ Widget navItem({required iconPath, required label, required dynamic goTo}) {
     ),
   );
 }
+Widget WalletnavItem({required iconPath, required label, required Function () function}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 5),
+    child: Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0), // Adjust the radius as needed
+      ),
+      elevation: 3, // Adjust the elevation as needed
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12.0), // Same radius as the Card
+        onTap: function ,
+        child: ListTile(
+          leading: Icon(iconPath, color: Colors.white, size: 22),
+          trailing: const Icon(
+            Icons.keyboard_arrow_right,
+            color: Colors.white,
+            size: 22,
+          ),
+          title: Text(
+            label,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Nunito',
+            ),
+          ),
+          tileColor: AppColors.greyTextColor,
+          textColor: Colors.white,
+          selectedTileColor: AppColors.primaryColor,
+        ),
+      ),
+    ),
+  );
+}
+
 
 Widget navMenu({required navItems}) {
   return ListView(
