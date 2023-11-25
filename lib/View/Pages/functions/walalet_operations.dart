@@ -193,9 +193,11 @@ class WalletCtrl with ChangeNotifier {
     )..show();
   }
   inputBusinessDetails(BuildContext context) {
+    TextEditingController businessNameController = TextEditingController();
     TextEditingController amountController = TextEditingController();
     double myWidth = MediaQuery.of(context).size.width;
     double myHeight = MediaQuery.of(context).size.height;
+
     AwesomeDialog(
       context: context,
       dialogType: DialogType.NO_HEADER,
@@ -207,10 +209,10 @@ class WalletCtrl with ChangeNotifier {
         child: Column(
           children: [
             Text("Make Payment", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),),
-            customWalletField(
+              customWalletField(
               label: 'Business Name ',
               require: true,
-              controller: amountController,
+              controller: businessNameController, // Use businessNameController here
               height: myHeight,
               width: myHeight,
               type: TextInputType.text,
@@ -224,7 +226,7 @@ class WalletCtrl with ChangeNotifier {
             customWalletField(
               label: 'Enter amount ',
               require: true,
-              controller: amountController,
+              controller: amountController, // Use amountController here
               height: myHeight,
               width: myHeight,
               type: TextInputType.number,
