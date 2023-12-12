@@ -122,7 +122,7 @@ class _QRScanPageState extends State<QRScanPage> {
               bgColor: AppColors.primaryColor,
               isLoading: false,
               onPressed: () {
-                walletCtrl.inputBusinessDetails(context);
+                walletCtrl.selectAccountDialog(context);
               }
           )),
             SizedBox(

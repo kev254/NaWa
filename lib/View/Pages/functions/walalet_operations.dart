@@ -286,6 +286,60 @@ void depositDialog(BuildContext context) {
   )..show();
 }
 
+  void selectAccountDialog(BuildContext context) {
+    // Local State for dialog
+    String selectedAccount = 'account1'; // Default to 'account1'
+
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.NO_HEADER,
+      animType: AnimType.scale,
+      dialogBackgroundColor: AppColors.whiteColor,
+      headerAnimationLoop: false,
+      body: StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                RadioListTile<String>(
+                  title: const Text('Account 1'),
+                  value: 'account1',
+                  groupValue: selectedAccount,
+                  onChanged: (value) => setState(() => selectedAccount = value!),
+                ),
+                RadioListTile<String>(
+                  title: const Text('Account 2'),
+                  value: 'account2',
+                  groupValue: selectedAccount,
+                  onChanged: (value) => setState(() => selectedAccount = value!),
+                ),
+                RadioListTile<String>(
+                  title: const Text('Account 3'),
+                  value: 'account3',
+                  groupValue: selectedAccount,
+                  onChanged: (value) => setState(() => selectedAccount = value!),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+      btnOk: ElevatedButton(
+        onPressed: () {
+          Navigator.of(context).pop(); // Close the current dialog
+          inputBusinessDetails(context); // Open the inputBusinessDetails dialog
+        },
+        style: ElevatedButton.styleFrom(
+          primary: Colors.green, // Set the button background color
+        ),
+        child: Text('Confirm'),
+      ),
+    )..show();
+  }
+
+
 
   inputBusinessDetails(BuildContext context) {
     TextEditingController businessNameController = TextEditingController();

@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:nawa/View/Pages/qrScan.dart';
 import 'package:nawa/View/themes/colors.dart';
 import 'package:get/get.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../widgets/globalwidgets.dart';
 import 'functions/walalet_operations.dart';
@@ -17,6 +18,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  final PageController _pageController = PageController(); // Declare _pageController
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     double myHeight = MediaQuery.of(context).size.height;
@@ -34,8 +44,39 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: myHeight * 0.04,
                 ),
-                homebigCard(
-                    myWidth: myWidth, myHeight: myHeight, context: context),
+                Expanded(
+                  child: PageView(
+                    controller: _pageController,
+                    children: [
+                      homebigCard(
+                        myWidth: myWidth,
+                        myHeight: myHeight,
+                        context: context
+                      ),
+                      homebigCard(
+                        myWidth: myWidth,
+                        myHeight: myHeight,
+                        context: context
+                      ),
+                      // Add more cards if needed
+                    ],
+                  ),
+                ),
+                SmoothPageIndicator(
+                controller: _pageController,  // PageController for PageView
+                count:  2,  // The number of pages
+                effect:  SlideEffect(  // Your choice of effect
+                  spacing:  8.0,
+                  radius:  4.0,
+                  dotWidth:  24.0,
+                  dotHeight:  16.0,
+                  paintStyle:  PaintingStyle.fill,
+                  strokeWidth:  1.5,
+                  dotColor:  Colors.grey,
+                  activeDotColor:  Colors.blue
+                ),
+              ),
+
                 Padding(
                   padding: EdgeInsets.only(
                       top: myHeight * 0.02,
@@ -45,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Fuetured ',
+                        'Featured',
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

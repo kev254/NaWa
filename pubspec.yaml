@@ -45,6 +45,7 @@ dependencies:
   qr_flutter: ^4.0.0
   d_chart: ^2.6.3
   awesome_dialog: ^3.1.0
+  smooth_page_indicator: ^1.1.0
 
 dev_dependencies:
   flutter_test:
